@@ -1,0 +1,45 @@
+<resources>
+
+    <string name="app_name">Password Manager</string>
+    <string name="login_label">Login:</string>
+    <string name="title_label">Title:</string>
+    <string name="content_label">Content:</string>
+    <string name="site_label">Site:</string>
+    <string name="memo_label">Memo:</string>
+    <string name="old_password_label">Old Password:</string>
+    <string name="new_password_label">New Password:</string>
+    <string name="login_button_label">Login</string>
+    <string name="save_button_label">Save</string>
+    <string name="reset_Password_button_label">Reset</string>
+    <string name="cancel_button_label">Cancel</string>
+    <string name="create_menu_label">Create</string>
+    <string name="reset_password_menu_label">Reset Password</string>
+    <string name="delete_menu_label">Delete</string>
+    <string name="about_menu_label">About</string>
+    <string name="exit_menu_label">Exit</string>
+    <string name="wrong_password_message">Wrong password</string>
+    <string name="about_content_text">\n\
+Version: 1.0.0\n\
+\n\
+Welcome to Use Password Manager.\n\
+. Password Manager is free software: you can redistribute it and/or modify it\n\
+  under the terms of the GNU General Public License as published by the Free\n\
+  Software Foundation, either version 3 of the License, or (at your option) any\n\
+  later version.\n\
+  \n\
+. Password Manager is distributed in the hope that it will be useful, but\n\
+  WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or\n\
+  FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more\n\
+  details.\n\
+  \n\
+. You should have received a copy of the GNU General Public License along with\n\
+  Audio Tag Editor. If not, see http://www.gnu.org/licenses/
+.\n\
+\n\
+Contact Us:lijianghui2000@gmail.com\n\
+Project site:http://code.google.com/p/audiotageditorforandroid/\n\
+\n\
+This product is developed by LiJianghui \n\
+(c) Copyright by authors. All rights reserved\n\</string>
+
+</resources>

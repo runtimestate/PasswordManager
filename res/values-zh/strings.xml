@@ -1,0 +1,35 @@
+<resources>
+
+    <string name="app_name">密码管理器</string>
+    <string name="login_label">登录:</string>
+    <string name="title_label">标题:</string>
+    <string name="content_label">内容:</string>
+    <string name="site_label">网站:</string>
+    <string name="memo_label">备注:</string>
+    <string name="old_password_label">旧密码:</string>
+    <string name="new_password_label">新密码:</string>
+    <string name="login_button_label">登录</string>
+    <string name="save_button_label">保存</string>
+    <string name="reset_Password_button_label">重置</string>
+    <string name="cancel_button_label">取消</string>
+    <string name="create_menu_label">新建</string>
+    <string name="reset_password_menu_label">重置密码</string>
+    <string name="delete_menu_label">删除</string>
+    <string name="about_menu_label">关于</string>
+    <string name="exit_menu_label">退出</string>
+    <string name="wrong_password_message">密码错误</string>
+    <string name="about_content_text">\n\
+Version: 1.0.0\n\
+\n\
+欢迎使用 Android 密码管理器,【密码管理器】采用 LGPL 开源协议： \n\
+•如果您不对【密码管理器】 程序代码进行任何修改，可以以任意方式自由使用：开源、非开源、商业及非商业。\n\
+•如果您对【密码管理器】程序代码进行任何的修改或者衍生，涉及修改部分的额外代码和衍生的代码都必须采用 LGPL 协议开放源代码。\n\
+•无论您对 【密码管理器】程序代码如何修改，都必须在程序文件头部声明版权信息的注释\n\
+\n\
+联系方式：runtimestate@gmail.com\n\
+项目地址：https://github.com/runtimestate/PasswordManager/\n\
+\n\
+This product is developed by RuntimeState\n\
+(c) Copyright by authors. All rights reserved\n\</string>
+
+</resources>
