@@ -25,6 +25,7 @@ import android.os.Bundle;
 import com.life.android.pwmanager.R;
 
 public class AboutActivity extends Activity {
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
