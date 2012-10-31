@@ -48,7 +48,6 @@ public class UserActivity extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login);
 		userDataSource = new UserDataSource(this);
-		userDataSource.open();
 
 		passwordEdit = (EditText) findViewById(R.id.passwordEdit);
 
@@ -63,6 +62,14 @@ public class UserActivity extends Activity implements OnClickListener {
 		switch (paramView.getId()) {
 		case R.id.loginButton:
 			String password = passwordEdit.getText().toString();
+			if (password == null) {
+				Intent messageIntent = new Intent();
+				messageIntent.putExtra("message",
+						this.getString(R.string.wrong_password_message));
+				messageIntent.setClass(this, MessageActivity.class);
+				startActivity(messageIntent);
+				break;
+			}
 			String encryptedPassword = CryptoHelper.encrypt(password);
 
 			List<User> users = userDataSource.getAllUsers();

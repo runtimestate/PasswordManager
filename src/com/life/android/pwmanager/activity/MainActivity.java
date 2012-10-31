@@ -47,7 +47,6 @@ public class MainActivity extends ListActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		itemDataSource = new ItemDataSource(this);
-		itemDataSource.open();
 
 		password = getIntent().getStringExtra("password");
 		if (password == null) {

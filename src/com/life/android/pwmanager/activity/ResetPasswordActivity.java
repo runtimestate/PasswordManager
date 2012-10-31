@@ -54,9 +54,7 @@ public class ResetPasswordActivity extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.reset_password);
 		userDataSource = new UserDataSource(this);
-		userDataSource.open();
 		itemDataSource = new ItemDataSource(this);
-		itemDataSource.open();
 
 		password = getIntent().getStringExtra("password");
 
@@ -75,12 +73,13 @@ public class ResetPasswordActivity extends Activity implements OnClickListener {
 		case R.id.resetPasswordButton:
 			String oldPassword = oldPasswordEdit.getText().toString();
 			String newPassword = newPasswordEdit.getText().toString();
-			if (!oldPassword.equals(oldPassword) || newPassword == null) {
+			if (!password.equals(oldPassword) || newPassword == null) {
 				Intent messageIntent = new Intent();
 				messageIntent.putExtra("message",
 						this.getString(R.string.wrong_password_message));
 				messageIntent.setClass(this, MessageActivity.class);
 				startActivity(messageIntent);
+				break;
 			}
 			String encryptedPassword = CryptoHelper.encrypt(password);
 			String newEncryptedPassword = CryptoHelper.encrypt(newPassword);

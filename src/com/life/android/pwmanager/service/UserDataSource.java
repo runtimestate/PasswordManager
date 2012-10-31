@@ -57,65 +57,98 @@ public class UserDataSource {
 	}
 
 	public User createUser(String name, String password) {
-		ContentValues values = new ContentValues();
-		values.put(NAME, name);
-		values.put(PASSWORD, password);
-		long insertId = database.insert(TABLE_NAME, null, values);
-		Cursor cursor = database.query(TABLE_NAME, allColumns, _ID + " = "
-				+ insertId, null, null, null, null);
-		cursor.moveToFirst();
-		User newUser = cursorToUser(cursor);
-		cursor.close();
+		User newUser = null;
+		try {
+			open();
+			ContentValues values = new ContentValues();
+			values.put(NAME, name);
+			values.put(PASSWORD, password);
+			long insertId = database.insert(TABLE_NAME, null, values);
+			Cursor cursor = database.query(TABLE_NAME, allColumns, _ID + " = "
+					+ insertId, null, null, null, null);
+			cursor.moveToFirst();
+			newUser = cursorToUser(cursor);
+			cursor.close();
+		} finally {
+			close();
+		}
 		return newUser;
 	}
 
 	public void deleteUser(User user) {
-		long id = user.getId();
-		System.out.println("Comment deleted with id: " + id);
-		database.delete(TABLE_NAME, _ID + " = " + id, null);
+		try {
+			open();
+			long id = user.getId();
+			database.delete(TABLE_NAME, _ID + " = " + id, null);
+		} finally {
+			close();
+		}
 	}
 
 	public boolean updateUser(User user) {
-		ContentValues values = new ContentValues();
-		values.put(_ID, user.getId());
-		values.put(NAME, user.getName());
-		values.put(PASSWORD, user.getPassword());
-		return database.update(TABLE_NAME, values, _ID + " = " + user.getId(),
-				null) > 0;
+		boolean flag = false;
+		try {
+			open();
+			ContentValues values = new ContentValues();
+			values.put(_ID, user.getId());
+			values.put(NAME, user.getName());
+			values.put(PASSWORD, user.getPassword());
+			flag = database.update(TABLE_NAME, values,
+					_ID + " = " + user.getId(), null) > 0;
+		} finally {
+			close();
+		}
+		return flag;
 	}
 
 	public User getUser(Long id) {
-		Cursor cursor = database.query(TABLE_NAME, allColumns,
-				_ID + " = " + id, null, null, null, null);
-		cursor.moveToFirst();
-		User user = cursorToUser(cursor);
-		cursor.close();
+		User user = null;
+		try {
+			open();
+			Cursor cursor = database.query(TABLE_NAME, allColumns, _ID + " = "
+					+ id, null, null, null, null);
+			cursor.moveToFirst();
+			user = cursorToUser(cursor);
+			cursor.close();
+		} finally {
+			close();
+		}
 		return user;
 	}
 
 	public User getUser(String password) {
-		Cursor cursor = database.query(TABLE_NAME, allColumns, PASSWORD
-				+ " = '" + password + "'", null, null, null, null);
-		cursor.moveToFirst();
-		User user = cursorToUser(cursor);
-		cursor.close();
+		User user = null;
+		try {
+			open();
+			Cursor cursor = database.query(TABLE_NAME, allColumns, PASSWORD
+					+ " = '" + password + "'", null, null, null, null);
+			cursor.moveToFirst();
+			user = cursorToUser(cursor);
+			cursor.close();
+		} finally {
+			close();
+		}
 		return user;
 	}
 
 	public List<User> getAllUsers() {
 		List<User> users = new ArrayList<User>();
+		try {
+			open();
+			Cursor cursor = database.query(TABLE_NAME, allColumns, null, null,
+					null, null, ORDER_BY);
 
-		Cursor cursor = database.query(TABLE_NAME, allColumns, null, null,
-				null, null, ORDER_BY);
-
-		cursor.moveToFirst();
-		while (!cursor.isAfterLast()) {
-			User user = cursorToUser(cursor);
-			users.add(user);
-			cursor.moveToNext();
+			cursor.moveToFirst();
+			while (!cursor.isAfterLast()) {
+				User user = cursorToUser(cursor);
+				users.add(user);
+				cursor.moveToNext();
+			}
+			// Make sure to close the cursor
+			cursor.close();
+		} finally {
+			close();
 		}
-		// Make sure to close the cursor
-		cursor.close();
 		return users;
 	}
 

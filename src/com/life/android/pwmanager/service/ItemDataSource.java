@@ -60,60 +60,88 @@ public class ItemDataSource {
 
 	public Item createItem(String title, String content, String site,
 			String memo) {
-		ContentValues values = new ContentValues();
-		values.put(TITLE, title);
-		values.put(CONTENT, content);
-		values.put(SITE, site);
-		values.put(MEMO, memo);
-		long insertId = database.insert(TABLE_NAME, null, values);
-		Cursor cursor = database.query(TABLE_NAME, allColumns, _ID + " = "
-				+ insertId, null, null, null, null);
-		cursor.moveToFirst();
-		Item newItem = cursorToItem(cursor);
-		cursor.close();
+		Item newItem = null;
+		try {
+			open();
+			ContentValues values = new ContentValues();
+			values.put(TITLE, title);
+			values.put(CONTENT, content);
+			values.put(SITE, site);
+			values.put(MEMO, memo);
+			long insertId = database.insert(TABLE_NAME, null, values);
+			Cursor cursor = database.query(TABLE_NAME, allColumns, _ID + " = "
+					+ insertId, null, null, null, null);
+			cursor.moveToFirst();
+			newItem = cursorToItem(cursor);
+			cursor.close();
+		} finally {
+			close();
+		}
 		return newItem;
 	}
 
 	public void deleteItem(Item item) {
-		long id = item.getId();
-		System.out.println("Comment deleted with id: " + id);
-		database.delete(TABLE_NAME, _ID + " = " + id, null);
+		try {
+			open();
+			long id = item.getId();
+			database.delete(TABLE_NAME, _ID + " = " + id, null);
+		} finally {
+			close();
+		}
 	}
 
 	public boolean updateItem(Item item) {
-		ContentValues values = new ContentValues();
-		values.put(_ID, item.getId());
-		values.put(TITLE, item.getTitle());
-		values.put(CONTENT, item.getContent());
-		values.put(SITE, item.getSite());
-		values.put(MEMO, item.getMemo());
-		return database.update(TABLE_NAME, values, _ID + " = " + item.getId(),
-				null) > 0;
+		boolean flag = false;
+		try {
+			open();
+			ContentValues values = new ContentValues();
+			values.put(_ID, item.getId());
+			values.put(TITLE, item.getTitle());
+			values.put(CONTENT, item.getContent());
+			values.put(SITE, item.getSite());
+			values.put(MEMO, item.getMemo());
+			flag = database.update(TABLE_NAME, values,
+					_ID + " = " + item.getId(), null) > 0;
+		} finally {
+			close();
+		}
+		return flag;
 	}
 
 	public Item getItem(Long id) {
-		Cursor cursor = database.query(TABLE_NAME, allColumns,
-				_ID + " = " + id, null, null, null, null);
-		cursor.moveToFirst();
-		Item item = cursorToItem(cursor);
-		cursor.close();
+		Item item = null;
+		try {
+			open();
+			Cursor cursor = database.query(TABLE_NAME, allColumns, _ID + " = "
+					+ id, null, null, null, null);
+			cursor.moveToFirst();
+			item = cursorToItem(cursor);
+			cursor.close();
+		} finally {
+			close();
+		}
 		return item;
 	}
 
 	public List<Item> getAllItems() {
 		List<Item> items = new ArrayList<Item>();
+		try {
+			open();
 
-		Cursor cursor = database.query(TABLE_NAME, allColumns, null, null,
-				null, null, ORDER_BY);
+			Cursor cursor = database.query(TABLE_NAME, allColumns, null, null,
+					null, null, ORDER_BY);
 
-		cursor.moveToFirst();
-		while (!cursor.isAfterLast()) {
-			Item item = cursorToItem(cursor);
-			items.add(item);
-			cursor.moveToNext();
+			cursor.moveToFirst();
+			while (!cursor.isAfterLast()) {
+				Item item = cursorToItem(cursor);
+				items.add(item);
+				cursor.moveToNext();
+			}
+			// Make sure to close the cursor
+			cursor.close();
+		} finally {
+			close();
 		}
-		// Make sure to close the cursor
-		cursor.close();
 		return items;
 	}
 

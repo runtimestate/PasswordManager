@@ -51,7 +51,6 @@ public class ItemActivity extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.item);
 		itemDataSource = new ItemDataSource(this);
-		itemDataSource.open();
 
 		long id = getIntent().getLongExtra("id", 0l);
 		password = getIntent().getStringExtra("password");
@@ -63,7 +62,7 @@ public class ItemActivity extends Activity implements OnClickListener {
 
 		String title = item.getTitle();
 		String content = item.getContent();
-		if (content != null){
+		if (content != null) {
 			content = CryptoHelper.decrypt(content, password);
 		}
 		String site = item.getSite();
@@ -90,11 +89,26 @@ public class ItemActivity extends Activity implements OnClickListener {
 		case R.id.saveButton:
 			String title = titleEdit.getText().toString();
 			String content = contentEdit.getText().toString();
+			if (title == null || content == null) {
+				Intent messageIntent = new Intent();
+				messageIntent.putExtra("message",
+						this.getString(R.string.wrong_password_message));
+				messageIntent.setClass(this, MessageActivity.class);
+				startActivity(messageIntent);
+				break;
+			}
+			String encryptedPassword = CryptoHelper.encrypt(content, password);
 			String site = siteEdit.getText().toString();
 			String memo = memoEdit.getText().toString();
-
-			itemDataSource.createItem(title,
-					CryptoHelper.encrypt(content, password), site, memo);
+			if (item.getId() == null) {
+				itemDataSource.createItem(title, encryptedPassword, site, memo);
+			} else {
+				item.setTitle(title);
+				item.setContent(encryptedPassword);
+				item.setSite(site);
+				item.setMemo(memo);
+				itemDataSource.updateItem(item);
+			}
 
 			Intent intent = new Intent();
 			intent.putExtra("password", password);
