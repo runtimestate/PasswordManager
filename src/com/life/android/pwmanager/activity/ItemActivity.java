@@ -101,7 +101,8 @@ public class ItemActivity extends Activity implements OnClickListener {
 			String site = siteEdit.getText().toString();
 			String memo = memoEdit.getText().toString();
 			if (item.getId() == null) {
-				itemDataSource.createItem(title, encryptedPassword, site, memo);
+				item = itemDataSource.createItem(title, encryptedPassword,
+						site, memo);
 			} else {
 				item.setTitle(title);
 				item.setContent(encryptedPassword);
@@ -112,8 +113,9 @@ public class ItemActivity extends Activity implements OnClickListener {
 
 			Intent intent = new Intent();
 			intent.putExtra("password", password);
-			intent.setClass(this, MainActivity.class);
-			startActivity(intent);
+			intent.putExtra("item", item);
+			setResult(MainActivity.ADD_OR_UPDATE, intent);
+			finish();
 			break;
 		case R.id.cancelButton:
 			finish();

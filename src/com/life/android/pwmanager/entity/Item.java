@@ -19,7 +19,11 @@
  */
 package com.life.android.pwmanager.entity;
 
-public class Item {
+import java.io.Serializable;
+
+public class Item implements Serializable {
+
+	private static final long serialVersionUID = 9212513310739164995L;
 
 	public static final String TABLE_NAME = "sys_item";
 

@@ -96,10 +96,10 @@ public class ResetPasswordActivity extends Activity implements OnClickListener {
 				itemDataSource.updateItem(item);
 			}
 
-			Intent mainIntent = new Intent();
-			mainIntent.putExtra("password", newPassword);
-			mainIntent.setClass(this, MainActivity.class);
-			startActivity(mainIntent);
+			Intent intent = new Intent();
+			intent.putExtra("password", newPassword);
+			setResult(MainActivity.RESET_PASSWORD, intent);
+			finish();
 			break;
 		case R.id.cancelButton:
 			finish();

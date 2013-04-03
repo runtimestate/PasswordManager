@@ -49,14 +49,17 @@ public final class R {
         public static final int menu=0x7f050000;
     }
     public static final class string {
-        public static final int about_content_text=0x7f040013;
+        public static final int about_content_text=0x7f040016;
         public static final int about_menu_label=0x7f04000f;
         public static final int app_name=0x7f040000;
         public static final int cancel_button_label=0x7f04000b;
+        public static final int confirm_button_label=0x7f040015;
         public static final int content_label=0x7f040003;
         public static final int create_menu_label=0x7f04000c;
         public static final int delete_menu_label=0x7f04000e;
         public static final int exit_menu_label=0x7f040010;
+        public static final int exit_message=0x7f040014;
+        public static final int exit_prompt=0x7f040013;
         public static final int login_activity_message=0x7f040012;
         public static final int login_button_label=0x7f040008;
         public static final int memo_label=0x7f040005;
